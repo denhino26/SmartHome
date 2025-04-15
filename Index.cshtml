@@ -1,0 +1,141 @@
+﻿@page
+@model SmartHomeApp.Pages.SelectUserModel
+@using SmartHomeApp.Models
+
+<div class="select-wrapper">
+    <div class="user-container">
+        <h1 class="user-title">Gebruiker Selecteren of Toevoegen</h1>
+
+        <div class="row g-4">
+            <!-- Bestaande gebruiker -->
+            <div class="col-md-6">
+                <div class="user-card">
+                    <h2>Bestaande Gebruiker</h2>
+                    <form method="post" class="user-form">
+                        <div class="mb-3">
+                            <label asp-for="SelectedUserId" class="form-label">Kies een gebruiker:</label>
+                            <select asp-for="SelectedUserId"
+                                    asp-items="@(new SelectList(Model.Users, "UserId", "Name"))"
+                                    class="form-select">
+
+                                <option value="">-- Selecteer gebruiker --</option>
+                            </select>
+                        </div>
+                        <button type="submit" class="btn btn-primary">Doorgaan</button>
+                    </form>
+                </div>
+            </div>
+
+            <!-- Nieuwe gebruiker -->
+            <div class="col-md-6">
+                <div class="user-card">
+                    <h2 style="color: #6c757d;">Nieuwe Gebruiker</h2>
+                    <form method="post" asp-page-handler="AddUser" class="user-form">
+                        <div class="mb-3">
+                            <label asp-for="NewUserName" class="form-label">Nieuwe gebruikersnaam:</label>
+                            <input type="text"
+                                   asp-for="NewUserName"
+                                   placeholder="Voer naam in"
+                                   class="form-control" />
+                        </div>
+                        <button type="submit" class="btn btn-secondary">Gebruiker toevoegen</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<style>
+    body {
+        font-family: 'Segoe UI', Tahoma, sans-serif;
+        margin: 0;
+        background: linear-gradient(to bottom right, #f0f4f8, #ffffff);
+    }
+
+    .select-wrapper {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        padding: 60px 20px;
+        min-height: 100vh;
+    }
+
+    .user-container {
+        background-color: #ffffff;
+        padding: 40px;
+        border-radius: 16px;
+        box-shadow: 0 8px 30px rgba(0, 0, 0, 0.1);
+        width: 100%;
+        max-width: 960px;
+    }
+
+    .user-title {
+        text-align: center;
+        font-size: 2rem;
+        margin-bottom: 30px;
+        color: #2c3e50;
+    }
+
+    .user-card {
+        border: 1px solid #dee2e6;
+        border-radius: 12px;
+        padding: 20px;
+        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+        transition: transform 0.3s ease;
+        background-color: #ffffff;
+    }
+
+        .user-card:hover {
+            transform: translateY(-4px);
+        }
+
+        .user-card h2 {
+            font-size: 1.25rem;
+            margin-bottom: 16px;
+            color: #007bff;
+        }
+
+    .user-form .form-label {
+        font-weight: 600;
+        color: #495057;
+    }
+
+    .form-select,
+    .form-control {
+        border-radius: 8px;
+        padding: 10px 12px;
+        font-size: 0.95rem;
+        border: 1px solid #ced4da;
+    }
+
+    .btn-primary,
+    .btn-secondary {
+        width: 100%;
+        padding: 12px;
+        border-radius: 8px;
+        font-weight: 600;
+        font-size: 0.95rem;
+        transition: background-color 0.2s ease;
+    }
+
+    .btn-primary {
+        background-color: #007bff;
+        color: #fff;
+        border: none;
+    }
+
+        .btn-primary:hover {
+            background-color: #0056b3;
+        }
+
+    .btn-secondary {
+        background-color: #6c757d;
+        color: #fff;
+        border: none;
+    }
+
+        .btn-secondary:hover {
+            background-color: #565e64;
+        }
+</style>

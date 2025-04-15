@@ -1,0 +1,214 @@
+﻿@page
+@model IndexModel
+@using SmartHomeApp.Models
+@{
+    Layout = "_Layout";
+}
+
+
+
+
+
+<div class="center-wrapper">
+    <div class="device-container">
+        <h2 class="device-title">Welkom @Model.SelectedUserName</h2>
+        <h6 class="device-title">Apparaten</h6>
+
+        <div class="table-wrapper">
+            <table class="device-table">
+                <thead>
+                    <tr>
+                        <th>Naam</th>
+                        <th>Type</th>
+                        <th>Status</th>
+                        <th>Acties</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @if (Model.Devices != null && Model.Devices.Any())
+                    {
+                        foreach (var device in Model.Devices)
+                        {
+                            <tr>
+                                <td>@device.Name</td>
+                                <td>@device.Type</td>
+                                <td>
+                                    <span class="status @(device.Status == "On" ? "status-on" : "status-off")">
+                                        @device.Status
+                                    </span>
+                                </td>
+                                <td>
+                                    <form method="post" class="inline-form">
+                                        <input type="hidden" name="deviceId" value="@device.Id" />
+                                        <button type="submit" name="action" value="toggle" class="btn-toggle">Wissel</button>
+                                    </form>
+                                </td>
+                            </tr>
+                        }
+                    }
+                    else
+                    {
+                        <tr>
+                            <td colspan="4" class="no-devices">Er zijn nog geen apparaten toegevoegd.</td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+
+        <div class="add-device-link">
+            <a asp-page="/AddDevice" class="btn-add">+ Nieuw apparaat toevoegen</a>
+        </div>
+    </div>
+</div>
+
+<style>
+    body {
+        font-family: 'Segoe UI', Tahoma, sans-serif;
+        margin: 0;
+        background: linear-gradient(to bottom right, #f0f4f8, #ffffff);
+    }
+
+    .center-wrapper {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        padding: 60px 20px;
+        min-height: 100vh;
+    }
+
+    .device-container {
+        background-color: #ffffff;
+        padding: 40px;
+        border-radius: 16px;
+        box-shadow: 0 8px 30px rgba(0, 0, 0, 0.1);
+        width: 100%;
+        max-width: 960px;
+    }
+
+    .device-title {
+        text-align: center;
+        font-size: 2rem;
+        margin-bottom: 30px;
+        color: #2c3e50;
+    }
+
+    .table-wrapper {
+        overflow-x: auto;
+    }
+
+    .device-table {
+        width: 100%;
+        border-collapse: separate;
+        border-spacing: 0;
+        font-size: 0.95rem;
+        border-radius: 12px;
+        overflow: hidden;
+        box-shadow: 0 4px 20px rgba(0, 0, 0, 0.05);
+        background-color: #ffffff;
+    }
+
+        .device-table thead {
+            background-color: #007bff;
+        }
+
+        .device-table th,
+        .device-table td {
+            padding: 16px 20px;
+            text-align: left;
+        }
+
+        .device-table th {
+            color: white;
+            font-weight: 600;
+            text-transform: uppercase;
+            font-size: 0.85rem;
+            letter-spacing: 0.5px;
+        }
+
+        .device-table tbody tr {
+            transition: background-color 0.2s ease;
+        }
+
+            .device-table tbody tr:hover {
+                background-color: #f1f8ff;
+            }
+
+        .device-table td {
+            color: #333;
+            border-top: 1px solid #e0e0e0;
+        }
+
+    .btn-toggle {
+        background-color: #007bff;
+        color: white;
+        padding: 8px 14px;
+        border: none;
+        border-radius: 6px;
+        font-size: 0.85rem;
+        font-weight: 600;
+        cursor: pointer;
+        transition: background-color 0.2s ease, transform 0.1s ease;
+    }
+
+        .btn-toggle:hover {
+            background-color: #0056b3;
+            transform: scale(1.05);
+        }
+
+    .add-device-link {
+        text-align: center;
+        margin-top: 30px;
+    }
+
+    .btn-add {
+        background-color: #28a745;
+        color: white;
+        padding: 12px 24px;
+        font-weight: bold;
+        border-radius: 8px;
+        text-decoration: none;
+        display: inline-block;
+        transition: background-color 0.2s ease;
+    }
+
+        .btn-add:hover {
+            background-color: #218838;
+        }
+
+    .status {
+        padding: 4px 10px;
+        border-radius: 12px;
+        font-weight: bold;
+        font-size: 0.85rem;
+    }
+
+    .status-on {
+        background-color: #d4edda;
+        color: #155724;
+    }
+
+    .status-off {
+        background-color: #f8d7da;
+        color: #721c24;
+    }
+
+    .no-devices {
+        text-align: center;
+        padding: 20px;
+        font-style: italic;
+        color: #999;
+    }
+
+
+    .btn-toggle,
+    .btn-add {
+        width: 100%;
+    }
+
+    .device-table th,
+    .device-table td {
+        padding: 12px;
+    }
+
+    }</style>
